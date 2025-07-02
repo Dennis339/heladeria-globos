@@ -1,0 +1,48 @@
+<% layout('menu') %>
+
+<h1 class="mb-4">Reporte de Ingresos Mensuales</h1>
+
+<form method="get" action="/reporte-ingresos" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <label for="inicio" class="form-label">Fecha de Inicio:</label>
+        <input type="date" name="inicio" id="inicio" class="form-control" value="<%= fechaInicio %>" required>
+    </div>
+    <div class="col-md-4">
+        <label for="fin" class="form-label">Fecha de Fin:</label>
+        <input type="date" name="fin" id="fin" class="form-control" value="<%= fechaFin %>" required>
+    </div>
+    <div class="col-md-4 align-self-end">
+        <button type="submit" class="btn btn-primary w-100">Generar Reporte</button>
+    </div>
+</form>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Sucursal</th>
+            <th>Tipo de Producto</th>
+            <th>Forma de Pago</th>
+            <th>Total Ingresos (Bs.)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if (datos.length > 0) { %>
+            <% datos.forEach(d => { %>
+                <tr>
+                    <td><%= d.sucursal %></td>
+                    <td><%= d.tipo_producto %></td>
+                    <td><%= d.forma_pago %></td>
+                    <td><%= d.total_ingresos.toFixed(2) %></td>
+                </tr>
+            <% }) %>
+        <% } else if (fechaInicio && fechaFin) { %>
+            <tr>
+                <td colspan="4" class="text-center text-warning">No se encontraron datos para las fechas seleccionadas.</td>
+            </tr>
+        <% } else { %>
+            <tr>
+                <td colspan="4" class="text-center text-muted">Por favor seleccione un rango de fechas.</td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>

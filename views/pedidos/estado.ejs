@@ -1,0 +1,63 @@
+<% layout('menu') %>
+
+<div class="container mt-5">
+    <h2 class="mb-4">📦 Reporte de Pedidos por Estado</h2>
+
+    <form method="get" action="/reporte-pedidos" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <label for="estado" class="form-label">Estado del Pedido:</label>
+            <select name="estado" id="estado" class="form-select" required>
+                <option value="">-- Seleccione --</option>
+                <option value="Pendiente" <%= estadoSeleccionado === 'Pendiente' ? 'selected' : '' %>>Pendiente</option>
+                <option value="En preparación" <%= estadoSeleccionado === 'En preparación' ? 'selected' : '' %>>En preparación</option>
+                <option value="Entregado" <%= estadoSeleccionado === 'Entregado' ? 'selected' : '' %>>Entregado</option>
+                <option value="Cancelado" <%= estadoSeleccionado === 'Cancelado' ? 'selected' : '' %>>Cancelado</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label for="inicio" class="form-label">Fecha Inicio:</label>
+            <input type="date" name="inicio" id="inicio" class="form-control" value="<%= fechaInicio %>" required>
+        </div>
+
+        <div class="col-md-3">
+            <label for="fin" class="form-label">Fecha Fin:</label>
+            <input type="date" name="fin" id="fin" class="form-control" value="<%= fechaFin %>" required>
+        </div>
+
+        <div class="col-md-2 align-self-end">
+            <button type="submit" class="btn btn-primary w-100">Generar</button>
+        </div>
+    </form>
+
+    <% if (datos.length > 0) { %>
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Canal</th>
+                    <th>Estado</th>
+                    <th>Forma de Pago</th>
+                    <th>Total (Bs.)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% datos.forEach(p => { %>
+                    <tr>
+                        <td><%= p.id_pedido %></td>
+                        <td><%= p.cliente || 'No registrado' %></td>
+                        <td><%= p.fecha.toISOString().split('T')[0] %></td>
+                        <td><%= p.canal %></td>
+                        <td><%= p.estado %></td>
+                        <td><%= p.forma_pago %></td>
+                        <td><%= p.monto_total.toFixed(2) %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } else if (estadoSeleccionado && fechaInicio && fechaFin) { %>
+        <div class="alert alert-warning">No se encontraron pedidos con esos filtros.</div>
+    <% } %>
+</div>

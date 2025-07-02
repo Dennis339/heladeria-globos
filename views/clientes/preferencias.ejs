@@ -1,0 +1,34 @@
+<% layout('menu') %>
+
+<h2 class="mb-4">Preferencias de Clientes</h2>
+
+<% if (datos.length > 0) { %>
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>ID Cliente</th>
+        <th>Nombre</th>
+        <th>Tipo Cliente</th>
+        <th>Producto Preferido</th>
+        <th>Total Comprado</th>
+        <th>Último Tipo de Comentario</th>
+        <th>Último Comentario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% datos.forEach(d => { %>
+        <tr>
+          <td><%= d.id_cliente %></td>
+          <td><%= d.cliente %></td>
+          <td><%= d.tipo_cliente %></td>
+          <td><%= d.producto_preferido %></td>
+          <td><%= d.total_comprado %></td>
+          <td><%= d.ultimo_tipo_comentario || 'Sin registro' %></td>
+          <td><%= d.ultimo_comentario || 'Sin registro' %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+  <div class="alert alert-info">No se encontraron datos de preferencias de clientes.</div>
+<% } %>

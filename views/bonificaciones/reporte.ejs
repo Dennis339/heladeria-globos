@@ -1,0 +1,55 @@
+<% layout('menu') %>
+
+<h1 class="mb-4">Reporte de Bonificaciones por Empleado</h1>
+
+<form method="get" action="/reporte-bonificaciones" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label for="mes" class="form-label">Mes:</label>
+        <select name="mes" id="mes" class="form-select" required>
+            <option value="">Seleccione un mes</option>
+            <% for (let i = 1; i <= 12; i++) { %>
+                <option value="<%= i %>" <%= mesSeleccionado == i ? 'selected' : '' %>>
+                    <%= new Date(0, i - 1).toLocaleString('es-ES', { month: 'long' }) %>
+                </option>
+            <% } %>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="anio" class="form-label">Año:</label>
+        <input type="number" name="anio" id="anio" class="form-control" min="2020" value="<%= anioSeleccionado %>" required>
+    </div>
+    <div class="col-md-3 align-self-end">
+        <button type="submit" class="btn btn-primary w-100">Generar Reporte</button>
+    </div>
+</form>
+
+<% if (datos.length > 0) { %>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>ID Empleado</th>
+                <th>Nombre</th>
+                <th>Meta</th>
+                <th>Ventas del Mes</th>
+                <th>Bonificación (Bs.)</th>
+                <th>Turnos Realizados</th>
+                <th>Total Ventas</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% datos.forEach(e => { %>
+                <tr>
+                    <td><%= e.id_empleado %></td>
+                    <td><%= e.empleado %></td>
+                    <td><%= e.meta %></td>
+                    <td><%= e.ventas_mes %></td>
+                    <td><%= e.bonificacion.toFixed(2) %></td>
+                    <td><%= e.turnos_realizados %></td>
+                    <td><%= e.total_ventas %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } else if (mesSeleccionado && anioSeleccionado) { %>
+    <div class="alert alert-warning">No se encontraron datos para el mes y año seleccionados.</div>
+<% } %>

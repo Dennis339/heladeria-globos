@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || 'Panel de Reportes - Heladería Globos' %></title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+<body class="container mt-4">
+
+    <header class="mb-4">
+        <h1 class="mb-3">Heladería Globos</h1>
+        <nav class="nav nav-pills">
+            <a class="nav-link" href="/">🏠 Inicio</a>
+            <a class="nav-link" href="/reporte-ingresos">📊 Ingresos Mensuales</a>
+            <a class="nav-link" href="/reporte-pedidos">📦 Pedidos Pendientes/Entregados</a>
+            <a class="nav-link" href="/reporte-ventas">🧾 Ventas por Día y Producto</a>
+            <a class="nav-link" href="/reporte-bonificaciones">💰 Bonificaciones por Empleado</a>
+            <a class="nav-link" href="/reporte-clientes">🧍 Preferencias de Clientes</a>
+        </nav>
+        <hr>
+    </header>
+
+    <main>
+        <%- body %>
+    </main>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
